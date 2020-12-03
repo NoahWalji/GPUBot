@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+{% block results %}
+    {% block result %}
+        {% for i in search %}
+            <div class="results">
+                <a class="card" href={{i[4]}} style="width: 18rem; height: 10rem; flex: 0 75%; !important;">
+                    <span class="p-name">{{i[0]}}</span>
+                    <span class="p-price">CND$ {{i[1]}} </span>
+                    <span class="p-rating">{{i[2]}}</span>
+                    <span class="p-store">{{i[3]}}</span>
+                </a>   
+            </div>   
+        {% endfor %}
+        <form method="POST">
+            <button type="submit" name="previous" class="btn btn-primary btn-sm prev-button">Previous Page</button>
+            <button type="submit" name="next" formmethod="POST" class="btn btn-primary btn-sm next-button">Next Page</button>
+        </form>
+    {% endblock %}
+{% endblock %}
