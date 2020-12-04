@@ -1,9 +1,10 @@
 {% extends "main.html" %}
 {% block results %}
     {% block result %}
+        <span class="result-header">Search Results for: "{{query}}"</span>
         {% for i in search %}
             <div class="results">
-                <a class="card" href={{i[4]}} style="width: 18rem; height: 10rem; flex: 0 75%; !important;">
+                <a class="card result" href={{i[4]}} style="width: 18rem; height: 10rem; flex: 0 75%; !important; background-color:white; text-overflow: ellipsis !important">
                     <span class="p-name">{{i[0]}}</span>
                     <span class="p-price">CND$ {{i[1]}} </span>
                     <span class="p-rating">{{i[2]}}</span>
@@ -11,9 +12,11 @@
                 </a>   
             </div>   
         {% endfor %}
-        <form method="POST">
-            <button type="submit" name="previous" class="btn btn-primary btn-sm prev-button">Previous Page</button>
-            <button type="submit" name="next" formmethod="POST" class="btn btn-primary btn-sm next-button">Next Page</button>
-        </form>
+        <div class="page-buttons">
+            <form method="POST">
+                <button type="submit" name="previous" class="btn btn-primary btn-sm prev-button">Previous Page</button>
+                <button type="submit" name="next" formmethod="POST" class="btn btn-primary btn-sm next-button">Next Page</button>
+            </form>
+        </div>
     {% endblock %}
 {% endblock %}

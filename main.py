@@ -45,7 +45,7 @@ def search(query):
         ## Init the scrape for the given url
         results = requests.get(url, headers=headers)
         content = results.content
-        soup = BeautifulSoup(content, "html.parser")
+        soup = BeautifulSoup(content, "lxml")
 
         ## Find all the divs with the selected div for the URL
         items = soup.findAll('div', divs[i])
@@ -99,8 +99,9 @@ def nextPage():
 
     ## If there are items left, add the page number and get the next 20 results in the list
     if (len(finalResults) != 0):
-        pageNum = pageNum + 1;
-        currentPage = finalResults[20*pageNum:20*(pageNum+1)]
+        if (len(finalResults[20*(pageNum+1):20*(pageNum+2)]) > 0):
+            pageNum = pageNum + 1;
+            currentPage = finalResults[20*pageNum:20*(pageNum+1)]
     return currentPage
 
 ## Switches the view to the previous page
@@ -111,9 +112,10 @@ def prevPage():
     
 
     ## If there are items left, sub the page number and get the previous 20 results in the list
-    if (len(finalResults) > 0):
+    if (len(finalResults) > 0 and pageNum != 0):
         pageNum = pageNum - 1;
-        currentPage = finalResults[20*(pageNum):20*(pageNum+1)]
+        if (len(finalResults[20*(pageNum):20*(pageNum+1)]) > 0):
+            currentPage = finalResults[20*(pageNum):20*(pageNum+1)]
     return currentPage
         
 
@@ -126,6 +128,8 @@ def home():
 ## Runs if any forms are submitted (Next Page, Previous Page and Search Submit)
 @app.route("/", methods=["POST"])
 def queryResults():
+    global query;
+    global currentPage;
 
     ## Figures out if the next button, previous button or serach button was pressed and gets the items
     if ('query' in request.form):
@@ -138,4 +142,9 @@ def queryResults():
     elif ('previous' in request.form):
         items = prevPage()
     
-    return render_template('results.html', search = items);
+    if (len(items) > 0):
+        return render_template('results.html', search = items, query = query);
+    
+    else:
+        return render_template('results.html', search = currentPage, query = query);
+    
