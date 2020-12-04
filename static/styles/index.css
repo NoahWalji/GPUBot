@@ -152,7 +152,6 @@ a, a:hover {
   }
 
   .footer {
-    display: block;
     position: fixed;
     bottom: 0;
     margin-top: 2%;
