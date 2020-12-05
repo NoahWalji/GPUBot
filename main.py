@@ -43,7 +43,7 @@ def search(query):
         results = requests.get(url, headers=headers)
         content = results.content
         soup = BeautifulSoup(content, "html.parser")
-        if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss"):
+        if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss" or url == "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query):
             print(content)
         ## Find all the divs with the selected div for the URL
         items = soup.findAll('div', divs[i])
