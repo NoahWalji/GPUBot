@@ -41,6 +41,7 @@ def search(query):
         ## Init the scrape for the given url
         results = requests.get(url, headers=headers)
         content = results.content
+        print(content)
         soup = BeautifulSoup(content, "html.parser")
 
         ## Find all the divs with the selected div for the URL
