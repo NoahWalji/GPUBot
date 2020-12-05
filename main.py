@@ -41,9 +41,9 @@ def search(query):
         ## Init the scrape for the given url
         results = requests.get(url, headers=headers)
         content = results.content
-        print(content)
         soup = BeautifulSoup(content, "html.parser")
-
+        if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss"):
+            print(content)
         ## Find all the divs with the selected div for the URL
         items = soup.findAll('div', divs[i])
         
