@@ -18,7 +18,7 @@ def search(query):
     ## Replace spaces with url friendly
     query = query.replace(" ", "+")
     ## List of URLS and divs used on URLS
-    urls = ["https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss", "https://www.newegg.ca/p/pl?d="+query, "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query]
+    urls = ["www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss", "www.newegg.ca/p/pl?d="+query, "www.canadacomputers.com/search/results_details.php?language=en&keywords="+query]
     divs = ['a-section a-spacing-medium', 'item-container','row mx-0']
 
     ## Init globals and other variables
@@ -30,10 +30,7 @@ def search(query):
     currentPage = []
 
     ## Header for web scrapping TODO: (Change not sure if needed?)
-    headers = requests.utils.default_headers()
-    headers.update({
-        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0',
-    })
+    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", "Accept-Encoding":"gzip, deflate", "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT":"1","Connection":"close", "Upgrade-Insecure-Requests":"1"}
 
     ## Main For Loop: Loops through all URLS and scrapes each URL with the selected item
     i = 0;
