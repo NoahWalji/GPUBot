@@ -1,4 +1,5 @@
 import requests
+import random
 from flask import Flask, render_template, request
 from bs4 import BeautifulSoup
 
@@ -20,11 +21,14 @@ def search(query):
     ## List of URLS and divs used on URLS
     urls = ["https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss", "https://www.newegg.ca/p/pl?d="+query, "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query]
     divs = ['a-section a-spacing-medium', 'item-container','row mx-0']
-    proxies = {
-        'https': 'https://noahwalji:db5ff74c@107.173.73.67:60099',
-        'https': 'https://noahwalji:db5ff74c@107.173.73.68:60099',
-        'https': 'https://noahwalji:db5ff74c@107.173.73.112:60099',
-    }
+
+    user_agent_list = [
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
+    ]
 
     ## Init globals and other variables
     global finalResults
@@ -35,7 +39,7 @@ def search(query):
     currentPage = []
 
     ## Header for web scrapping TODO: (Change not sure if needed?)
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0", 
+    headers = {"User-Agent":random.choice(user_agent_list), 
     "Accept-Encoding":"gzip, deflate", 
     "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", 
     "DNT":"1",
@@ -47,7 +51,7 @@ def search(query):
     for url in urls:
 
         ## Init the scrape for the given url
-        results = requests.get(url, proxies=proxies, headers=headers)
+        results = requests.get(url, headers=headers)
         content = results.content
         soup = BeautifulSoup(content, "html.parser")
         if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss" or url == "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query):
