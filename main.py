@@ -53,7 +53,7 @@ def search(query):
         ## Init the scrape for the given url
         results = requests.get(url, headers=headers)
         content = results.content
-        soup = BeautifulSoup(content, "html.parser")
+        soup = BeautifulSoup(content, "lxml")
         if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss" or url == "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query):
             print(content)
         ## Find all the divs with the selected div for the URL
@@ -65,6 +65,7 @@ def search(query):
             ## Run if it is an Amazon link
             if (i == 0):
                 itemName = item.find('span','a-size-medium a-color-base a-text-normal').text if item.find('span','a-size-medium a-color-base a-text-normal') else ""
+                itemName = itemName[0:70] + "..."
                 itemPrice = float(item.find('span','a-offscreen').text.replace("CDN$", "").replace(",","")) if item.find('span','a-offscreen') else 0
                 itemRating = item.find('span','a-icon-alt').text if item.find('span','a-icon-alt') else "No Ratings"
                 itemURL = "http://amazon.ca/" + item.find('a', 'a-link-normal a-text-normal')['href']
@@ -73,6 +74,7 @@ def search(query):
             ## Run if its a NewEgg link
             elif (i == 1):
                 itemName = item.find('a','item-title').text if item.find('a','item-title') else ""
+                itemName = itemName[0:70] + "..."
                 itemPrice = float(item.find('li','price-current').text.replace("$","").replace(",","").replace(u'\u2013',"").split("(")[0]) if item.find('li','price-current').text else 0
                 itemRating = item.find('a','item-rating')['title'] if item.find('a','item-rating') else "No Ratings"
                 itemRating = itemRating.replace("+", " ")
@@ -83,6 +85,7 @@ def search(query):
             ## Run if its a Canada Computers link
             elif (i == 2):
                 itemName = item.find('span','productTemplate_title').text if item.find('span','productTemplate_title') else ""
+                itemName = itemName[0:70] + "..."
                 itemPrice = float(item.find('span','pq-hdr-product_price').text.replace("$","").replace(",","")) if item.find('span','pq-hdr-product_price') else 0
                 itemRating = "No Ratings Available"
                 itemURL = item.find('a')['href']
