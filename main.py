@@ -20,6 +20,11 @@ def search(query):
     ## List of URLS and divs used on URLS
     urls = ["https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss", "https://www.newegg.ca/p/pl?d="+query, "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query]
     divs = ['a-section a-spacing-medium', 'item-container','row mx-0']
+    proxies = {
+        'https': 'https://noahwalji:db5ff74c@107.173.73.67:60099',
+        'https': 'https://noahwalji:db5ff74c@107.173.73.68:60099',
+        'https': 'https://noahwalji:db5ff74c@107.173.73.112:60099',
+    }
 
     ## Init globals and other variables
     global finalResults
@@ -42,7 +47,7 @@ def search(query):
     for url in urls:
 
         ## Init the scrape for the given url
-        results = requests.get(url, headers=headers)
+        results = requests.get(url, proxies=proxies, headers=headers)
         content = results.content
         soup = BeautifulSoup(content, "html.parser")
         if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss" or url == "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query):
