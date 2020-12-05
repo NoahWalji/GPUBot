@@ -30,47 +30,15 @@ def search(query):
     currentPage = []
 
     ## Header for web scrapping TODO: (Change not sure if needed?)
-    header1 = {
-        'Host': 'www.amazon.ca',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-        'TE': 'Trailers'
-    }
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36'}
 
-    header2 = {
-    'Host': 'www.newegg.ca',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.5',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
-    'TE': 'Trailers'
-    }   
-
-    header3 = {
-    'Host': 'www.canadacomputers.com',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.5',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
-    'TE': 'Trailers'
-    }
-
-    headers = [header1,header2,header3]
 
     ## Main For Loop: Loops through all URLS and scrapes each URL with the selected item
     i = 0;
     for url in urls:
 
         ## Init the scrape for the given url
-        results = requests.get(url, headers=headers[i])
+        results = requests.get(url, headers=headers)
         content = results.content
         soup = BeautifulSoup(content, "html.parser")
         if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss"):
