@@ -30,13 +30,9 @@ def search(query):
     currentPage = []
 
     ## Header for web scrapping TODO: (Change not sure if needed?)
-    headers = {
-    'content-type': 'text/html;charset=UTF-8',
-    'Accept-Encoding': 'gzip, deflate, sdch',
-    'Accept-Language': 'en-US,en;q=0.8',
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    }
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0",
+       "Accept-Encoding": "gzip, deflate", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+       "DNT": "1", "Connection": "close", "Upgrade-Insecure-Requests": "1"}
 
     ## Main For Loop: Loops through all URLS and scrapes each URL with the selected item
     i = 0;
@@ -45,7 +41,7 @@ def search(query):
         ## Init the scrape for the given url
         results = requests.get(url, headers=headers)
         content = results.content
-        soup = BeautifulSoup(content, "lxml")
+        soup = BeautifulSoup(content, "html.parser")
 
         ## Find all the divs with the selected div for the URL
         items = soup.findAll('div', divs[i])
