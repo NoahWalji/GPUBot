@@ -148,4 +148,7 @@ def queryResults():
     else:
         return render_template('results.html', search = currentPage, query = query);
 
+if __name__ == '__main__':
+    app.run(threaded=True)
+
     
