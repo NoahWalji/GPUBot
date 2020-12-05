@@ -80,7 +80,7 @@ def search(query):
                 result = [itemName,itemPrice,itemRating,"Canada Computers", itemURL]
             
             ## If Price is zero it means that the item is either sold out, or has multiple prices: not included
-            if (itemPrice != 0):
+            if (itemPrice > 299):
                 finalResults.append(result)
         i = i + 1
     
@@ -126,7 +126,7 @@ def home():
     return render_template('main.html')
 
 ## Runs if any forms are submitted (Next Page, Previous Page and Search Submit)
-@app.route("/", methods=["POST"])
+@app.route("/", methods=["GET","POST"])
 def queryResults():
     global query;
     global currentPage;
