@@ -1,3 +1,5 @@
+<!-- Template for Contact Form webpage -->
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,18 +18,25 @@
         <link rel="preconnect" href="https://fonts.gstatic.com"> 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     </head>
+
+    <!-- Body Template -->
     <body>
+        <!-- Page Header (Same as Main) -->
         <div id="header">
             <a href="/">
                 <img id="logo" src="/static/logo.png">
             </a>
         </div>
+
+        <!-- Success/Error Message -->
+        {% if message %}
         <div class="alert alert-success" role="alert">
             {{message}} 
-            {% if message %}
                 <a class="return" href="/">Return Home</a>
-            {% endif %}
         </div>
+        {% endif %}
+
+        <!-- Template for Contact Form -->
         <div class="contactForm">
             <form method="POST">
                 <div class="form-group">
@@ -45,10 +54,14 @@
                 <button type="submit" name="senderSubmit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+
+        <!-- Footer -->
         <div class="footer">
             <a href="/contact" class="contact-button">Contact Us</a>
             <span class="copyright">© GPUBot 2020. All rights reserved</span>
         </div>
+
+
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

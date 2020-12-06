@@ -1,17 +1,30 @@
+<!-- Template for Results -->
+
 {% extends "main.html" %}
 {% block results %}
     {% block result %}
-        <span class="result-header">Search Results for: "{{query}}"</span>
+        <!-- Results Header Text -->
+        <span class="result-header">Search Results for: "{{query}} (Page: {{pageNum+1}})"</span>
+
+        <!-- For Loop that produces all results in order of relevance -->
         {% for i in search %}
             <div class="results">
-                <a class="card result" href={{i[4]}} style="width: 18rem; height: 10rem; flex: 0 75%; !important; background-color:white; text-overflow: ellipsis !important">
+                <a class="card result" href={{i[4]}} target="_blank" style="width: 18rem; height: 10rem; flex: 0 75%; !important; background-color:white; text-overflow: ellipsis !important">
                     <span class="p-name">{{i[0]}}</span>
                     <span class="p-price">CND$ {{i[1]}} </span>
                     <span class="p-rating">{{i[2]}}</span>
-                    <span class="p-store">{{i[3]}}</span>
+                    {% if i[3] == 'Amazon' %}
+                        <img class="amazon-logo" src="/static/amazon-logo.png">
+                    {% elif i[3] == 'NewEgg' %}
+                        <img class="newegg-logo" src="/static/newegg-logo.png">
+                    {% elif i[3] == 'Canada Computers' %}
+                        <img class="cc-logo" src="/static/cc-logo.png">
+                    {% endif %}
                 </a>   
             </div>   
         {% endfor %}
+
+        <!-- Display Next/Previous Buttons -->
         <div class="page-buttons">
             <form method="POST">
                 <button type="submit" name="previous" class="btn btn-primary btn-sm prev-button">Previous Page</button>

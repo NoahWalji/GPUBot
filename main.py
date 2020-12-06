@@ -1,13 +1,16 @@
+## Imports
 import requests
 import random
 import difflib
-import smtplib
 
 from flask import Flask, render_template, request
 from bs4 import BeautifulSoup
+from contact import contactPage
 
 
+## Register the Contact Form in the Main
 app = Flask(__name__)
+app.register_blueprint(contactPage, url_prefix="")
 
 ## Global Variables
 query = ""
@@ -145,6 +148,7 @@ def home():
 def queryResults():
     global query;
     global currentPage;
+    global pageNum;
 
     ## Figures out if the next button, previous button or serach button was pressed and gets the items
     if ('query' in request.form):
@@ -158,32 +162,10 @@ def queryResults():
         items = prevPage()
     
     if (len(items) > 0):
-        return render_template('results.html', search = items, query = query);
+        return render_template('results.html', search = items, query = query, pageNum = pageNum);
     
     else:
-        return render_template('results.html', search = currentPage, query = query);
-
-@app.route("/contact")
-def contact():
-    return render_template('contact-form.html')
-
-
-@app.route("/contact", methods=["POST"])
-def contactSubmission():
-    senderEmail = request.form.get("senderEmail")
-    senderSubject = request.form.get("senderSubject")
-    senderContents = request.form.get('senderContents')
-
-    if (not senderEmail or not senderSubject or not senderContents):
-        return render_template('contact-form.html', message= "Error: Please fill out all fields and try again")
-
-    message = 'Subject: {}\n\n{}'.format("[GPUBot Client]: " + senderSubject, "Sender Email: " + senderEmail + "\n" + senderContents)
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
-    server.login("gpubotsender@gmail.com", "cp317assignment")
-    server.sendmail("gpubotsender@gmail.com", "gpubotreceiver@gmail.com", message)
-
-    return render_template('contact-form.html', message= "Success: We have received your message! Please allow us 48 hours to respond.")
+        return render_template('results.html', search = currentPage, query = query, pageNum = pageNum);
 
 if __name__ == '__main__':
     app.run(debug=True,threaded=True)
