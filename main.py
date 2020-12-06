@@ -1,5 +1,8 @@
 import requests
 import random
+import difflib
+import smtplib
+
 from flask import Flask, render_template, request
 from bs4 import BeautifulSoup
 
@@ -97,7 +100,7 @@ def search(query):
         i = i + 1
     
     ## Sort based on price (Lowest to highest)
-    finalResults = sorted(finalResults, key=lambda x:x[1])
+    finalResults = sorted(finalResults, key=lambda x: difflib.SequenceMatcher(None, x[0], query).ratio(), reverse=True)
     ## Set current page (first page) and return 
     currentPage = finalResults[:20]
     return currentPage
@@ -159,6 +162,28 @@ def queryResults():
     
     else:
         return render_template('results.html', search = currentPage, query = query);
+
+@app.route("/contact")
+def contact():
+    return render_template('contact-form.html')
+
+
+@app.route("/contact", methods=["POST"])
+def contactSubmission():
+    senderEmail = request.form.get("senderEmail")
+    senderSubject = request.form.get("senderSubject")
+    senderContents = request.form.get('senderContents')
+
+    if (not senderEmail or not senderSubject or not senderContents):
+        return render_template('contact-form.html', message= "Error: Please fill out all fields and try again")
+
+    message = 'Subject: {}\n\n{}'.format("[GPUBot Client]: " + senderSubject, "Sender Email: " + senderEmail + "\n" + senderContents)
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login("gpubotsender@gmail.com", "cp317assignment")
+    server.sendmail("gpubotsender@gmail.com", "gpubotreceiver@gmail.com", message)
+
+    return render_template('contact-form.html', message= "Success: We have received your message! Please allow us 48 hours to respond.")
 
 if __name__ == '__main__':
     app.run(debug=True,threaded=True)

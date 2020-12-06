@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GPUBot</title>
+        <title>GPUBot: Contact Us</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,17 +21,34 @@
             <a href="/">
                 <img id="logo" src="/static/logo.png">
             </a>
-            <form class="searchForm" method="POST">
-                <input id="searchbar" type="text" name="query" placeholder="Search the GPUBot...">
-                <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+        <div class="alert alert-success" role="alert">
+            {{message}} 
+            {% if message %}
+                <a class="return" href="/">Return Home</a>
+            {% endif %}
+        </div>
+        <div class="contactForm">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="senderEmail">Your Email Address: (This is how we'll contact you)</label>
+                    <input type="email" name="senderEmail" class="form-control" id="senderEmail" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="senderSubject">Message Subject:</label>
+                    <input type="text" name="senderSubject" class="form-control" id="senderSubject">
+                </div>
+                <div class="form-group">
+                    <label for="senderContents">Message:</label>
+                    <textarea class="form-control" name="senderContents" id="senderContents" rows="5"></textarea>
+                </div>
+                <button type="submit" name="senderSubmit" class="btn btn-primary">Submit</button>
             </form>
         </div>
-        <div id="results">{% block results %}{% endblock %}</div>
         <div class="footer">
             <a href="/contact" class="contact-button">Contact Us</a>
             <span class="copyright">© GPUBot 2020. All rights reserved</span>
         </div>
-
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
