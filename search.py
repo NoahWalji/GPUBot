@@ -14,9 +14,27 @@ finalResults = []
 currentPage = []
 pageNum = 0
 
-## Main Search Function
-## Function is run upon a users submission of the search bar
-## Returns: First 20 Results (Cost Lowest to Highest) and updates global
+"""
+Main Search Function
+Function is run upon a users submission of the search bar. It takes the query, searchs all retailers sites and returns a list of results
+Made By: Noah Walji
+Arguments: Query (String: The search query submitted by the user)
+Variables: 
+    - currentPage: The users current page results
+    - divs: Array (Array of divs to get results from each site)
+    - items: Array of items found using div in the results
+    - finalResults: Array of all results
+    - headers: Dictonary of header to use when searching
+    - pageNum: Page number currently on
+    - productName, price, rating, store
+    - query: String (Query user submitted)
+    - url: Array (List of urls to search from)
+    - user_agent_list: Array (List of user agents to use when searching)
+Input: Query, Output: Final Results
+Error Handling: If price is not found, or less than $300 remove from list, 
+
+Returns: First 20 Results (Cost Lowest to Highest) and updates global
+"""
 def search(query):
     ## Replace spaces with url friendly
     query = query.replace(" ", "+")
@@ -56,8 +74,6 @@ def search(query):
         results = requests.get(url, headers=headers)
         content = results.content
         soup = BeautifulSoup(content, "lxml")
-        if (url == "https://www.amazon.ca/s?k="+query+"&rh=n%3A677273011&ref=nb_sb_noss" or url == "https://www.canadacomputers.com/search/results_details.php?language=en&keywords="+query):
-            print(content)
         ## Find all the divs with the selected div for the URL
         items = soup.findAll('div', divs[i])
         
@@ -104,7 +120,19 @@ def search(query):
     currentPage = finalResults[:20]
     return currentPage
 
-## Switches the view to the next page
+"""
+Next Page  Function
+Function produces the next page of results
+Made By: Noah Walji
+Variables: 
+    - currentPage: The users current page results
+    - finalResults: Array of all results
+    - pageNum: Page number currently on
+
+Error Handling: If there are none left return nothing
+
+Returns: Updated current page
+"""
 def nextPage():
     global finalResults
     global pageNum
@@ -118,7 +146,19 @@ def nextPage():
             currentPage = finalResults[20*pageNum:20*(pageNum+1)]
     return currentPage
 
-## Switches the view to the previous page
+"""
+Previous Page  Function
+Function produces the previous page of results
+Made By: Noah Walji
+Variables: 
+    - currentPage: The users current page results
+    - finalResults: Array of all results
+    - pageNum: Page number currently on
+
+Error Handling: If there are none left or on first page return nothing
+
+Returns: Updated current page
+"""
 def prevPage():
     global finalResults
     global pageNum

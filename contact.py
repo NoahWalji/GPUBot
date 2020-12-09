@@ -12,9 +12,20 @@ def contact():
     return render_template('contact-form.html')
 
 
-## Runs whenever someone submits a contact form
+"""
+Send Email Function
+Function takes form data and sends 2 emails with the results
+Made By: Noah Walji
+Variables: 
+    - message: Message Contents: Email formatted
+    - sendeEmail, senderSubject, senderContents
+
+Error Handling: If form fields are not filled, invalid email or failed email produce error message
+
+Returns: Success/Failure message to the client
+"""
 @contactPage.route("/contact", methods=["POST"])
-def contactSubmission():
+def sendEmail():
     ## Sets the results of the form to the variables
     senderEmail = request.form.get("senderEmail")
     senderSubject = request.form.get("senderSubject")

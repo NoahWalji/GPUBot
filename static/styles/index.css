@@ -25,6 +25,7 @@ a, a:hover {
     margin: auto;
     width: 70%;
     padding: 10px;
+    text-align: center;
 }
 
 /* Center Logo */
@@ -212,6 +213,18 @@ a, a:hover {
   }
 
   .return:hover {
+    font-weight: bold;
+  }
+
+  /* ===== 404 Return Text ===== */
+  .error-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    text-align: center;
+
+  }
+
+  .error-text:hover {
     font-weight: bold;
   }
 
